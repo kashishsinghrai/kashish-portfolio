@@ -47,6 +47,11 @@ export const metadata: Metadata = {
     google: "jXH32nZsr6-iXwgG9OoNQSU5cwCF2pBditdiL7BKXSA",
   },
 
+  other: {
+    "google-adsense-account": "ca-pub-5483559036529536",
+  },
+
+  
   keywords: [
     "Kashish Singh",
     "kashishsinghrai",
