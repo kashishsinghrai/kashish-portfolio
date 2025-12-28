@@ -27,6 +27,7 @@ const jsonLd = {
     "https://medium.com/@kashishsinghrai",
     "https://www.facebook.com/kashishsinghraii",
     "https://bsky.app/profile/kashishsinghrai.bsky.social",
+    "https://kashishsinghrai.blogspot.com/",
   ],
   jobTitle: "Software Engineer",
   alumniOf: "Rai University",
