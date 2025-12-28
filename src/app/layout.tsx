@@ -12,6 +12,28 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// JSON-LD Schema Object for SEO Authority
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Kashish Singh",
+  url: "https://kashishsinghrai.vercel.app",
+  sameAs: [
+    "https://github.com/kashishsinghrai",
+    "https://linkedin.com/in/kashishsinghrai",
+    "https://twitter.com/kashishsinghrai",
+    "https://kashishsinghrai.blogspot.com",
+    "https://instagram.com/kashishsinghrai",
+    "https://medium.com/@kashishsinghrai",
+    "https://www.facebook.com/kashishsinghraii",
+    "https://bsky.app/profile/kashishsinghrai.bsky.social",
+  ],
+  jobTitle: "Software Engineer",
+  alumniOf: "Rai University",
+  description:
+    "Backend Developer specializing in MERN stack and AI innovations.",
+};
+
 export const metadata: Metadata = {
   title: {
     default: "Kashish Singh | Backend Developer & AI Enthusiast",
@@ -19,10 +41,11 @@ export const metadata: Metadata = {
   },
   description:
     "Official portfolio of Kashish Singh - B.Tech CSE Student at Rai University. Specialized in MERN Stack, Scalable Backend Systems, and AI Innovations.",
-    
-    verification: {
-    google: "jXH32nZsr6-iXwgG9OoNQSU5cwCF2pBditdiL7BKXSA", 
+
+  verification: {
+    google: "jXH32nZsr6-iXwgG9OoNQSU5cwCF2pBditdiL7BKXSA",
   },
+
   keywords: [
     "Kashish Singh",
     "kashishsinghrai",
@@ -39,11 +62,11 @@ export const metadata: Metadata = {
     title: "Kashish Singh | Backend Developer & AI Enthusiast",
     description:
       "Building scalable backend systems and community-driven tech solutions like GradLink.",
-    url: "https://kashishsinghrai.vercel.app", // Replace with your actual URL once deployed
+    url: "https://kashishsinghrai.vercel.app",
     siteName: "Kashish Singh Portfolio",
     images: [
       {
-        url: "/og-image.jpg", // Ensure this file exists in your /public folder (1200x630px)
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Kashish Singh Portfolio Banner",
@@ -82,6 +105,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-[#030303] text-zinc-400`}
       >
+        {/* JSON-LD Structured Data for Google Authority */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+
         {children}
       </body>
     </html>
