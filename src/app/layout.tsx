@@ -19,6 +19,10 @@ export const metadata: Metadata = {
   },
   description:
     "Official portfolio of Kashish Singh - B.Tech CSE Student at Rai University. Specialized in MERN Stack, Scalable Backend Systems, and AI Innovations.",
+    
+    verification: {
+    google: "jXH32nZsr6-iXwgG9OoNQSU5cwCF2pBditdiL7BKXSA", 
+  },
   keywords: [
     "Kashish Singh",
     "kashishsinghrai",
