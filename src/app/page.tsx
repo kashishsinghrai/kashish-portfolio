@@ -8,6 +8,8 @@ import {
 } from "@/lib/data";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
+import Stats from "@/components/Stats"; // Missing component import
+import Testimonials from "@/components/Testimonials"; // Missing component import
 import {
   ExternalLink,
   Github,
@@ -16,21 +18,22 @@ import {
   BookOpen,
   GraduationCap,
   Briefcase,
+  Download, // For Resume
 } from "lucide-react";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#030303] text-zinc-500 selection:bg-blue-500/20 selection:text-blue-200 antialiased font-sans">
-      {/* 1. Subtle Background: Dot Grid & Top Glow */}
+      {/* Background Decor */}
       <div className="fixed inset-0 z-[-1] pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(#1a1a1a_1px,transparent_1px)] [background-size:40px_40px] opacity-30"></div>
-        <div className="absolute top-[-5%] left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-blue-600/5 blur-[120px] rounded-full"></div>
+        <div className="absolute top-[-5%] left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-blue-600/5 blur-[140px] rounded-full"></div>
       </div>
 
       <Navbar />
 
       <div className="max-w-[1100px] px-8 mx-auto">
-        {/* 2. HERO SECTION */}
+        {/* HERO SECTION */}
         <section className="pt-48 pb-32">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -64,7 +67,16 @@ export default function Home() {
             {DATA.description}
           </motion.p>
 
-          <div className="flex items-center gap-8">
+          <div className="flex flex-wrap items-center gap-6 md:gap-8">
+            {/* NEW RESUME BUTTON */}
+            <a
+              href="/Kashish_Singh_Resume.pdf"
+              download
+              className="flex items-center gap-2 px-6 py-3 text-xs font-bold tracking-widest text-black uppercase transition-all bg-white rounded-full hover:bg-zinc-200 active:scale-95"
+            >
+              <Download size={14} /> Download CV
+            </a>
+
             <a
               href="mailto:kashishsingh124356@gmail.com"
               className="flex items-center gap-2 text-xs font-bold tracking-widest text-white uppercase transition-all group"
@@ -75,17 +87,20 @@ export default function Home() {
                 className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
               />
             </a>
-            <div className="h-[1px] w-12 bg-zinc-800" />
+
             <a
               href="#portfolio"
               className="text-xs font-bold tracking-widest uppercase transition-colors text-zinc-600 hover:text-blue-500"
             >
-              View Projects
+              View Work
             </a>
           </div>
         </section>
 
-        {/* 3. CAPABILITIES */}
+        {/* STATS SECTION (Added from your components) */}
+        <Stats />
+
+        {/* CAPABILITIES */}
         <section className="grid grid-cols-1 gap-16 py-24 border-t border-zinc-900 md:grid-cols-3">
           {SERVICES.map((service, i) => (
             <div key={i} className="flex flex-col">
@@ -100,7 +115,7 @@ export default function Home() {
           ))}
         </section>
 
-        {/* 4. PUBLICATIONS & WRITING (Creative X-Factor) */}
+        {/* PUBLICATIONS */}
         <section className="py-24 border-t border-zinc-900">
           <div className="flex items-end justify-between mb-16">
             <h2 className="text-xs font-mono uppercase tracking-[0.4em] text-zinc-700">
@@ -142,7 +157,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 5. PROJECTS (The Archive) */}
+        {/* PROJECTS */}
         <section id="portfolio" className="py-24 border-t border-zinc-900">
           <h2 className="text-xs font-mono uppercase tracking-[0.4em] text-zinc-700 mb-16">
             Selected Work
@@ -189,7 +204,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 6. PROFESSIONAL & ACADEMIC (Timeline) */}
+        {/* TIMELINE */}
         <section className="grid gap-24 py-32 border-t border-zinc-900 md:grid-cols-2">
           <div>
             <div className="flex items-center gap-3 mb-12">
@@ -242,7 +257,10 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 7. SIGNATURE CTA & SOCIALS */}
+        {/* TESTIMONIALS (Added from your components) */}
+        <Testimonials />
+
+        {/* CONTACT */}
         <section
           id="contact"
           className="py-40 text-center border-t border-zinc-900"
