@@ -51,7 +51,6 @@ export const metadata: Metadata = {
     "google-adsense-account": "ca-pub-5483559036529536",
   },
 
-  
   keywords: [
     "Kashish Singh",
     "kashishsinghrai",
@@ -61,6 +60,9 @@ export const metadata: Metadata = {
     "Software Engineer Ahmedabad",
     "GradLink Project",
     "AI Enthusiast Portfolio",
+    "Software Engineer in Lucknow",
+    "Kashish Singh Lucknow",
+    "Kashish Singh Raipur",
   ],
   authors: [{ name: "Kashish Singh" }],
   creator: "Kashish Singh",
