@@ -1,0 +1,117 @@
+.wrapper {
+  margin-bottom: 3rem;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+/* ── Header Styling ── */
+.header {
+  margin-bottom: 1.25rem;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.2rem;
+}
+
+.icon {
+  font-size: 1.25rem; /* Reduced size */
+  line-height: 1;
+}
+
+.title {
+  font-size: 1.35rem; /* Reduced from 1.6rem for a cleaner look */
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.85rem; /* Smaller subtitle */
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── List Styling ── */
+.postList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.postItem {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem; /* Tighter gap */
+  padding: 0.35rem 0;
+}
+
+.postDate {
+  font-size: 0.8rem; /* Professional small date */
+  color: #999;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.postLink {
+  font-size: 0.95rem; /* Standard reading size */
+  color: #3a6ea5; /* Using standard blue for better link visibility */
+  font-weight: 500;
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.postLink:hover {
+  text-decoration: underline;
+  color: #d16b1a; /* Changes to orange on hover */
+}
+
+/* ── Year Grouping ── */
+.yearGroup {
+  margin-top: 2rem;
+}
+
+.yearHeading {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid #e0d9cc;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.count {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: #aaa;
+}
+
+/* ── Tag Badge ── */
+.tagBadge {
+  font-size: 0.65rem;
+  background-color: #f0ede6;
+  color: #777;
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-left: auto;
+}
+
+/* ── Mobile Optimization ── */
+@media (max-width: 600px) {
+  .postItem {
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .postDate {
+    min-width: auto;
+    font-size: 0.75rem;
+  }
+}

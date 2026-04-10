@@ -1,77 +1,80 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google"; // Sirf Inter rakhein
 import "./globals.css";
+import Sidebar from "@/components/Sidebar/Sidebar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-// JSON-LD Schema Object for SEO Authority
+// ── SEO AUTHORITY DATA (Sab kuch safe hai) ──
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Kashish Singh",
+  alternateName: "kashishsinghrai",
   url: "https://kashishsinghrai.vercel.app",
+  image: "https://kashishsinghrai.vercel.app/hero-avatar.png",
   sameAs: [
     "https://github.com/kashishsinghrai",
     "https://linkedin.com/in/kashishsinghrai",
     "https://twitter.com/kashishsinghrai",
     "https://kashishsinghrai.blogspot.com",
-    "https://instagram.com/kashishsinghrai",
-    "https://medium.com/@kashishsinghrai",
-    "https://www.facebook.com/kashishsinghraii",
     "https://bsky.app/profile/kashishsinghrai.bsky.social",
-    "https://kashishsinghrai.blogspot.com/",
+    "https://navojit.com",
   ],
-  jobTitle: "Software Engineer",
-  alumniOf: "Rai University",
+  jobTitle: "Software Engineer & Founder",
+  worksFor: {
+    "@type": "Organization",
+    name: "Navojit",
+  },
+  alumniOf: [
+    { "@type": "CollegeOrUniversity", name: "Rai University" },
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Prof. Rajendra Singh University (PRSU)",
+    },
+  ],
   description:
-    "Backend Developer specializing in MERN stack and AI innovations.",
+    "Kashish Singh is a Software Developer and the founder of Navojit, specializing in MERN stack, AI innovations, and scalable backend systems.",
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://kashishsinghrai.vercel.app"),
   title: {
-    default: "Kashish Singh | Backend Developer & AI Enthusiast",
+    default: "Kashish Singh | Software Developer & Founder of Navojit",
     template: "%s | Kashish Singh",
   },
   description:
-    "Official portfolio of Kashish Singh - B.Tech CSE Student at Rai University. Specialized in MERN Stack, Scalable Backend Systems, and AI Innovations.",
+    "Official portfolio of Kashish Singh. Founder of Navojit, specializing in MERN stack, Next.js architecture, and AI-driven solutions. Student at Rai University.",
+
+  keywords: [
+    "Kashish Singh",
+    "Kashish",
+    "kashishsinghrai",
+    "Kashish Singh Navojit",
+    "Software Developer uttar pradesh",
+    "Backend Engineer India",
+    "GradLink project",
+  ],
 
   verification: {
     google: "jXH32nZsr6-iXwgG9OoNQSU5cwCF2pBditdiL7BKXSA",
+  },
+
+  alternates: {
+    canonical: "https://kashishsinghrai.vercel.app",
   },
 
   other: {
     "google-adsense-account": "ca-pub-5483559036529536",
   },
 
-  keywords: [
-    "Kashish Singh",
-    "kashishsinghrai",
-    "Kashish Singh Rai University",
-    "Backend Developer India",
-    "MERN Stack Developer",
-    "Software Engineer Ahmedabad",
-    "GradLink Project",
-    "AI Enthusiast Portfolio",
-    "Software Engineer in Lucknow",
-    "Kashish Singh Lucknow",
-    "Kashish Singh Raipur",
-  ],
-  authors: [{ name: "Kashish Singh" }],
-  creator: "Kashish Singh",
   openGraph: {
-    title: "Kashish Singh | Backend Developer & AI Enthusiast",
+    title: "Kashish Singh | Software Developer & Architect",
     description:
-      "Building scalable backend systems and community-driven tech solutions like GradLink.",
+      "Kashish Singh's digital garden. Building Navojit and scalable AI systems.",
     url: "https://kashishsinghrai.vercel.app",
-    siteName: "Kashish Singh Portfolio",
+    siteName: "Kashish Singh",
+    type: "website",
     images: [
       {
         url: "/og-image.jpg",
@@ -80,46 +83,36 @@ export const metadata: Metadata = {
         alt: "Kashish Singh Portfolio Banner",
       },
     ],
-    locale: "en_US",
-    type: "website",
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "Kashish Singh | Backend Developer",
-    description: "B.Tech CSE Student at Rai University & AI Enthusiast",
+    title: "Kashish Singh (@kashishsinghrai)",
     creator: "@kashishsinghrai",
+    // ✅ ADDED THIS: Twitter/X preview ke liye
     images: ["/og-image.jpg"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-[#030303] text-zinc-400`}
-      >
-        {/* JSON-LD Structured Data for Google Authority */}
+    <html lang="en" className={inter.variable}>
+      <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-
-        {children}
+      </head>
+      {/* font-georgia ki zaroorat nahi kyunki globals.css mein body par pehle se apply hai */}
+      <body className="antialiased">
+        <div className="layoutWrapper">
+          <Sidebar />
+          <main className="mainContent">{children}</main>
+        </div>
       </body>
     </html>
   );

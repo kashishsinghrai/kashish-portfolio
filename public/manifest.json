@@ -1,0 +1,16 @@
+{
+  "name": "Kashish Singh | Software Developer",
+  "short_name": "Kashish",
+  "description": "Portfolio of Kashish Singh, Founder of Navojit",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f0e8",
+  "theme_color": "#d16b1a",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}

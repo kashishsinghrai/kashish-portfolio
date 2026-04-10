@@ -1,36 +1,100 @@
-@import "tailwindcss";
-
+/* ── 1. Variables & Design Tokens ── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colors - Tania's Signature Palette */
+  --bg-main: #f5f0e8;
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  --accent-color: #d16b1a; /* Your Signature Orange */
+  --border-color: #e0d9cc;
+  
+  /* Typography */
+  --font-georgia: Georgia, "Times New Roman", serif;
+  --font-inter: var(--font-inter); /* Next.js Inter fallback */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ── 2. Basic Reset ── */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 2rem;
+  scroll-smooth: smooth;
 }
 
 body {
-  text-rendering: optimizeLegibility;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-georgia);
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── 3. Typography Helpers ── */
+h1, h2, h3, h4, h5, h6 {
+  color: #000;
+  line-height: 1.25;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.sans-serif {
+  font-family: var(--font-inter), -apple-system, sans-serif;
+}
+
+/* ── 4. Layout Structure ── */
+.layoutWrapper {
+  display: flex;
+  flex-direction: column; /* Mobile: Sidebar stays on top */
+  min-height: 100vh;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 2.5rem 1.5rem; /* Mobile Padding */
+  width: 100%;
+  max-width: 900px; /* Limits width for better readability */
+}
+
+/* ── 5. Desktop Responsiveness (768px and up) ── */
+@media (min-width: 768px) {
+  .layoutWrapper {
+    flex-direction: row; /* Sidebar on Left, Content on Right */
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 2rem;
+  }
+
+  .mainContent {
+    padding: 5rem 3rem; /* Spaced out desktop padding */
+  }
+}
+
+/* ── 6. Utility Classes ── */
+.highlight {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Selection highlight in your signature orange */
+::selection {
+  background: rgba(209, 107, 26, 0.15);
+  color: var(--text-primary);
 }
