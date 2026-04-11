@@ -106,7 +106,7 @@ export default function Sidebar() {
             </li>
             <li>
               <a
-                href="https://bsky.app"
+                href="https://bsky.app/profile/kashishsinghrai.bsky.social"
                 target="_blank"
                 rel="noreferrer"
                 className={styles.navItem}
