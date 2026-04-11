@@ -10,6 +10,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Kashish Singh",
+  otherName: "kashish singh rai",
   alternateName: "kashishsinghrai",
   url: "https://kashishsinghrai.vercel.app",
   image: "https://kashishsinghrai.vercel.app/hero-avatar.png",
@@ -30,7 +31,7 @@ const jsonLd = {
     { "@type": "CollegeOrUniversity", name: "Rai University" },
     {
       "@type": "CollegeOrUniversity",
-      name: "Prof. Rajendra Singh University (PRSU)",
+      name: "Prof. Rajendra Singh (Rajju Bhaiya) University, Prayagraj",
     },
   ],
   description:
@@ -50,6 +51,9 @@ export const metadata: Metadata = {
     "Kashish Singh",
     "Kashish",
     "kashishsinghrai",
+    " kashish singh rai",
+    "kashish singh raipur",
+    "kashish singh uttar pradesh",
     "Kashish Singh Navojit",
     "Software Developer uttar pradesh",
     "Backend Engineer India",

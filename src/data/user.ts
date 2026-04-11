@@ -77,7 +77,7 @@ export const USER_DATA: UserData = {
   name: "Kashish Singh",
   initials: "KS",
   role: "Software Developer & Founder of Navojit",
-  location: "Ahmedabad, Gujarat / Fatehpur, UP",
+  location: "Fatehpur, Uttar Pradesh/Ahmedabad, Gujarat/raipur,uttar pradesh ",
 
   bio: [
     "I am Kashish Singh, the founder of Navojit, an innovation lab dedicated to engineering technology with awareness.",
@@ -272,7 +272,7 @@ export const USER_DATA: UserData = {
     bio: [
       "I am Kashish Singh, founder of Navojit. We don't just build for clients; we build products that solve problems we care about.",
       "My philosophy is 'Useful or Nothing.' Every interface I design is built for the person least familiar with technology.",
-      "I live at the intersection of mathematical logic and software engineering, constantly refining my craft in Ahmedabad and Raipur.",
+      "I live at the intersection of mathematical logic and software engineering, constantly refining my craft in Ahmedabad and Raipur uttar pradesh.",
     ],
     current: [
       "Scaling Navojit's product suite (Oraysen, Users, Udyti).",
