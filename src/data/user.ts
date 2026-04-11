@@ -1,3 +1,4 @@
+import { SiMedium, SiSubstack, SiBluesky } from "react-icons/si";
 // Social/Brand Icons (Font Awesome)
 import { IconType } from "react-icons";
 import {
@@ -5,7 +6,7 @@ import {
   FaLinkedin,
   FaTwitter,
   FaInstagram,
-  FaCloud,
+  
 } from "react-icons/fa";
 
 // Technical/UI Icons (Lucide via React Icons)
@@ -134,7 +135,17 @@ export const USER_DATA: UserData = {
     {
       name: "BlueSky",
       url: "https://bsky.app/profile/kashishsinghrai.bsky.social",
-      icon: FaCloud,
+      icon: SiBluesky,
+    },
+    {
+      name: "medium",
+      url: "https://medium.com/@kashishsinghrai",
+      icon: SiMedium,
+    },
+    {
+      name: "substack",
+      url: "https://kashishsinghrai.substack.com",
+      icon: SiSubstack,
     },
   ],
 
