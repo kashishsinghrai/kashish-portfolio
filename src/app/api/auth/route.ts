@@ -1,5 +1,7 @@
-import { NavojitAuth, createNextAuthHandler } from "@navojit/auth";
+export const dynamic = "force-dynamic";
+
 import { prisma } from "@/db";
+import { cookies } from "next/headers";
 
 // ============================================================================
 // NAVOJIT AUTHENTICATION ENGINE
@@ -31,17 +33,25 @@ const prismaAdapter = {
   },
 };
 
-const authEngine = new NavojitAuth({
-  adapter: prismaAdapter,
-  secret: process.env.NAVOJIT_SECRET || "fallback-secret",
-});
+let handlersCache: any = null;
 
-// Generate standard App Router handlers for POST requests
-const handlers = createNextAuthHandler(authEngine);
+async function getHandlers() {
+  if (handlersCache) return handlersCache;
+  
+  // Lazily import to bypass Turbopack's build-time fs execution error
+  const { NavojitAuth, createNextAuthHandler } = await import("@navojit/auth");
+  
+  const authEngine = new NavojitAuth({
+    adapter: prismaAdapter,
+    secret: process.env.NAVOJIT_SECRET || "fallback-secret",
+  });
 
-import { cookies } from "next/headers";
+  handlersCache = createNextAuthHandler(authEngine);
+  return handlersCache;
+}
 
 export const POST = async (req: Request) => {
+  const handlers = await getHandlers();
   const res = await handlers.POST(req);
   
   if (res.ok) {
