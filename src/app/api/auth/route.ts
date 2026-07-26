@@ -3,13 +3,11 @@ export const dynamic = "force-dynamic";
 import { prisma } from "@/db";
 import { cookies } from "next/headers";
 
-// ============================================================================
-// NAVOJIT AUTHENTICATION ENGINE
-// ============================================================================
-// Mounts the custom @navojit/auth package to handle Next.js API requests.
-// Configured with a custom Prisma adapter to persist sessions in PostgreSQL.
+// 🚀 THE ULTIMATE BYPASS: Hide the require from Turbopack using eval
+// This forces raw Node.js to load the package and preserves the WASM bindings.
+const authModule = eval('require')("@navojit/auth");
+const { NavojitAuth, createNextAuthHandler } = authModule;
 
-// The @navojit/auth package requires a specific AuthAdapter interface
 const prismaAdapter = {
   createUser: async (data: any) => {
     const { password, isVerified, ...rest } = data;
@@ -33,40 +31,39 @@ const prismaAdapter = {
   },
 };
 
-let handlersCache: any = null;
+const authEngine = new NavojitAuth({
+  adapter: prismaAdapter,
+  secret: process.env.NAVOJIT_SECRET || "fallback-secret",
+});
 
-async function getHandlers() {
-  if (handlersCache) return handlersCache;
-  
-  // Lazily import to bypass Turbopack's build-time fs execution error
-  const { NavojitAuth, createNextAuthHandler } = await import("@navojit/auth");
-  
-  const authEngine = new NavojitAuth({
-    adapter: prismaAdapter,
-    secret: process.env.NAVOJIT_SECRET || "fallback-secret",
-  });
-
-  handlersCache = createNextAuthHandler(authEngine);
-  return handlersCache;
-}
+const handlers = createNextAuthHandler(authEngine);
 
 export const POST = async (req: Request) => {
-  const handlers = await getHandlers();
-  const res = await handlers.POST(req);
-  
-  if (res.ok) {
-    const data = await res.clone().json();
-    if (data.access_token) {
-      const cookieStore = await cookies();
-      cookieStore.set("navojit_access_token", data.access_token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        path: "/",
-        maxAge: 60 * 60 * 24 // 1 day
-      });
+  try {
+    const res = await handlers.POST(req);
+    
+    if (res.ok) {
+      const text = await res.clone().text();
+      if (text) {
+        const data = JSON.parse(text);
+        if (data.access_token) {
+          const cookieStore = await cookies();
+          cookieStore.set("navojit_access_token", data.access_token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            path: "/",
+            maxAge: 60 * 60 * 24
+          });
+        }
+      }
     }
+    return res;
+  } catch (error: any) {
+    console.error("🔥 AUTH ENGINE CRASHED:", error);
+    return new Response(
+      JSON.stringify({ error: "Internal Server Error", details: error.message }), 
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    );
   }
-  
-  return res;
 };
