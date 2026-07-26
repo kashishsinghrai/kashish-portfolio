@@ -12,9 +12,26 @@ import prisma from "@/db"; // Initializes PrismaClient from our singleton instan
 // We map the database operations (via Prisma) to the interface expected by NavojitAuth.
 // This decouples the auth engine from the specific database schema, making it highly modular.
 const prismaAdapter = {
-  createUser: async (data: any) => await prisma.adminUser.create({ data }),
-  findUserByEmail: async (email: string) => await prisma.adminUser.findUnique({ where: { email } }),
-  findUserById: async (id: string) => await prisma.adminUser.findUnique({ where: { id } })
+  createUser: async (data: any) => {
+    const { password, isVerified, ...rest } = data;
+    const user = await prisma.adminUser.create({
+      data: {
+        ...rest,
+        passwordHash: password,
+      },
+    });
+    return { ...user, password: user.passwordHash };
+  },
+  findUserByEmail: async (email: string) => {
+    const user = await prisma.adminUser.findUnique({ where: { email } });
+    if (!user) return null;
+    return { ...user, password: user.passwordHash };
+  },
+  findUserById: async (id: string) => {
+    const user = await prisma.adminUser.findUnique({ where: { id } });
+    if (!user) return null;
+    return { ...user, password: user.passwordHash };
+  }
 };
 
 // 2. Initialize the Sovereign Engine

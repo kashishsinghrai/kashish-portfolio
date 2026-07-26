@@ -1,5 +1,5 @@
 import { NavojitAuth, createNextAuthHandler } from "@navojit/auth";
-import { prisma } from "@/lib/db";
+import { prisma } from "@/db";
 
 // ============================================================================
 // NAVOJIT AUTHENTICATION ENGINE
@@ -9,9 +9,26 @@ import { prisma } from "@/lib/db";
 
 // The @navojit/auth package requires a specific AuthAdapter interface
 const prismaAdapter = {
-  createUser: async (data: any) => prisma.adminUser.create({ data }),
-  findUserByEmail: async (email: string) => prisma.adminUser.findUnique({ where: { email } }),
-  findUserById: async (id: string) => prisma.adminUser.findUnique({ where: { id } }),
+  createUser: async (data: any) => {
+    const { password, isVerified, ...rest } = data;
+    const user = await prisma.adminUser.create({
+      data: {
+        ...rest,
+        passwordHash: password,
+      },
+    });
+    return { ...user, password: user.passwordHash };
+  },
+  findUserByEmail: async (email: string) => {
+    const user = await prisma.adminUser.findUnique({ where: { email } });
+    if (!user) return null;
+    return { ...user, password: user.passwordHash };
+  },
+  findUserById: async (id: string) => {
+    const user = await prisma.adminUser.findUnique({ where: { id } });
+    if (!user) return null;
+    return { ...user, password: user.passwordHash };
+  },
 };
 
 const authEngine = new NavojitAuth({
