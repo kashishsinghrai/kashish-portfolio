@@ -54,6 +54,13 @@ var NavojitAuth = class {`;
     modified = true;
   }
 
+  // 3. Fix Dynamic require of "fs" is not supported (Turbopack bypass)
+  if (content.includes('require("fs")') || content.includes('__require("fs")')) {
+    content = content.replace(/__require\("fs"\)/g, 'eval("require")("fs")');
+    content = content.replace(/require\("fs"\)/g, 'eval("require")("fs")');
+    modified = true;
+  }
+
   if (modified) {
     fs.writeFileSync(filePath, content);
     console.log(`✅ Patched @navojit/auth: ${path.basename(filePath)}`);
