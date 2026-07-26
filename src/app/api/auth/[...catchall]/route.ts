@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { NavojitAuth, createNextAuthHandler } from "@navojit/auth";
 import prisma from "@/db"; // Initializes PrismaClient from our singleton instance
 
