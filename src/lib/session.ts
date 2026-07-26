@@ -1,10 +1,9 @@
 "use server";
 import { cookies } from "next/headers";
+import { verifyJwt } from "@/lib/auth";
 
 /**
- * Reads the secure navojit_access_token from cookies.
- * This should be used in Next.js Server Actions or Server Components
- * to verify if a user has an active session.
+ * Reads and cryptographically verifies the navojit_access_token cookie.
  */
 export async function getSessionToken() {
   const cookieStore = await cookies();
@@ -13,14 +12,13 @@ export async function getSessionToken() {
 }
 
 /**
- * A helper to quickly verify if the current request is authenticated.
- * It does not validate the JWT cryptographically here; 
- * it simply checks for the presence of the cookie. 
- * Real cryptographic validation can be passed to NavojitAuth if needed.
+ * Returns true if the current session has a valid, non-expired JWT.
  */
 export async function isAuthenticated() {
   const token = await getSessionToken();
-  return !!token;
+  if (!token) return false;
+  const payload = verifyJwt(token);
+  return payload !== null;
 }
 
 /**

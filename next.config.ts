@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  serverExternalPackages: ["@navojit/auth", "argon2", "postgres"],
+  serverExternalPackages: ["argon2", "postgres"],
   images: {
     remotePatterns: [
       {
