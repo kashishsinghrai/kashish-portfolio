@@ -10,7 +10,8 @@ import {
   LuFolder, 
   LuFileText, 
   LuBook, 
-  LuMail 
+  LuMail,
+  LuHouse
 } from "react-icons/lu";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -41,6 +42,7 @@ export default function Navbar() {
   }, [isOpen]);
 
   const navItems = [
+    { name: "Home", path: "/", icon: <LuHouse className="w-5 h-5" /> },
     { name: "About", path: "/about", icon: <LuUser className="w-5 h-5" /> },
     { name: "Projects", path: "/projects", icon: <LuFolder className="w-5 h-5" /> },
     { name: "Blog", path: "/blog", icon: <LuFileText className="w-5 h-5" /> },
