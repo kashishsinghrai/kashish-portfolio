@@ -1,8 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { prisma } from "@/db";
-const authModule = eval('require')("@navojit/auth");
-const { NavojitAuth, createNextAuthHandler } = authModule;
+import { NavojitAuth, createNextAuthHandler } from "@navojit/auth";
 
 const prismaAdapter = {
   createUser: async (data: any) => {

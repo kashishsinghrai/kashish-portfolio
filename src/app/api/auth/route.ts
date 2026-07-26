@@ -3,10 +3,7 @@ export const dynamic = "force-dynamic";
 import { prisma } from "@/db";
 import { cookies } from "next/headers";
 
-// 🚀 THE ULTIMATE BYPASS: Hide the require from Turbopack using eval
-// This forces raw Node.js to load the package and preserves the WASM bindings.
-const authModule = eval('require')("@navojit/auth");
-const { NavojitAuth, createNextAuthHandler } = authModule;
+import { NavojitAuth, createNextAuthHandler } from "@navojit/auth";
 
 const prismaAdapter = {
   createUser: async (data: any) => {
