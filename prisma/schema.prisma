@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// -----------------------------------------------------------------------------
+// AdminUser Model: Stores credentials for the Founder dashboard.
+// Used by @navojit/auth to verify login sessions.
+// -----------------------------------------------------------------------------
+model AdminUser {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  role         String   @default("FOUNDER")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// -----------------------------------------------------------------------------
+// Project Model: Dynamic projects for the Innovation Lab and portfolio.
+// -----------------------------------------------------------------------------
+model Project {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  tags        String[] // Array of tech stack strings
+  demoUrl     String?
+  sourceUrl   String?
+  articleUrl  String?
+  imageUrl    String?
+  year        String
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// -----------------------------------------------------------------------------
+// BlogPost Model: Dynamic content for the Knowledge Hub.
+// -----------------------------------------------------------------------------
+model BlogPost {
+  id        String   @id @default(uuid())
+  title     String
+  slug      String   @unique
+  content   String   @db.Text
+  published Boolean  @default(true)
+  readTime  Int      @default(5) // in minutes
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// -----------------------------------------------------------------------------
+// OpenSourcePackage Model: Specifically for navojit-auth ecosystem stats.
+// -----------------------------------------------------------------------------
+model OpenSourcePackage {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  npmUrl      String?
+  githubUrl   String?
+  downloads   Int      @default(0)
+  stars       Int      @default(0)
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// -----------------------------------------------------------------------------
+// Profile Model: Global profile info for the About section.
+// -----------------------------------------------------------------------------
+model Profile {
+  id          String   @id @default(uuid())
+  bio         String   @db.Text
+  avatarUrl   String?
+  resumeUrl   String?
+  githubUrl   String?
+  linkedinUrl String?
+  twitterUrl  String?
+  updatedAt   DateTime @updatedAt
+}
+
+// -----------------------------------------------------------------------------
+// Note Model: For quick engineering notes or snippets.
+// -----------------------------------------------------------------------------
+model Note {
+  id        String   @id @default(uuid())
+  title     String
+  content   String   @db.Text
+  category  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

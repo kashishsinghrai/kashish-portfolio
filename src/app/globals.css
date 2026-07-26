@@ -1,100 +1,68 @@
-/* ── 1. Variables & Design Tokens ── */
-:root {
-  /* Colors - Tania's Signature Palette */
-  --bg-main: #f5f0e8;
-  --text-primary: #111111;
-  --text-secondary: #555555;
-  --accent-color: #d16b1a; /* Your Signature Orange */
-  --border-color: #e0d9cc;
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-background: #0a0a0c;
+    --color-foreground: #f0f0f0;
+    --color-accent-orange: #d16b1a;
+    --color-accent-blue: #00f0ff;
+    --color-accent-purple: #9b51e0;
+  }
+}
+
+@layer base {
+  :root {
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(255, 255, 255, 0.03);
+  }
+
+  * {
+    border-color: var(--glass-border);
+  }
+
+  body {
+    /* Using standard CSS for custom background styles */
+    background-image:
+      radial-gradient(circle at 15% 50%, rgba(209, 107, 26, 0.05), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.05), transparent 25%);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: white;
+    letter-spacing: -0.025em;
+  }
+}
+
+@layer components {
+  /* Liquid Glass Panel Component */
+  .glass-panel {
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .glass-button {
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    padding: 0.625rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
   
-  /* Typography */
-  --font-georgia: Georgia, "Times New Roman", serif;
-  --font-inter: var(--font-inter); /* Next.js Inter fallback */
-}
-
-/* ── 2. Basic Reset ── */
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-html {
-  scroll-smooth: smooth;
-}
-
-body {
-  background-color: var(--bg-main);
-  color: var(--text-primary);
-  font-family: var(--font-georgia);
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* ── 3. Typography Helpers ── */
-h1, h2, h3, h4, h5, h6 {
-  color: #000;
-  line-height: 1.25;
-  margin-bottom: 1rem;
-  font-weight: 700;
-}
-
-a {
-  color: var(--accent-color);
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-.sans-serif {
-  font-family: var(--font-inter), -apple-system, sans-serif;
-}
-
-/* ── 4. Layout Structure ── */
-.layoutWrapper {
-  display: flex;
-  flex-direction: column; /* Mobile: Sidebar stays on top */
-  min-height: 100vh;
-}
-
-.mainContent {
-  flex: 1;
-  padding: 2.5rem 1.5rem; /* Mobile Padding */
-  width: 100%;
-  max-width: 900px; /* Limits width for better readability */
-}
-
-/* ── 5. Desktop Responsiveness (768px and up) ── */
-@media (min-width: 768px) {
-  .layoutWrapper {
-    flex-direction: row; /* Sidebar on Left, Content on Right */
-    max-width: 1200px;
-    margin: 0 auto;
-    gap: 2rem;
+  .glass-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
   }
-
-  .mainContent {
-    padding: 5rem 3rem; /* Spaced out desktop padding */
-  }
-}
-
-/* ── 6. Utility Classes ── */
-.highlight {
-  color: var(--accent-color);
-  font-weight: 600;
-}
-
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-/* Selection highlight in your signature orange */
-::selection {
-  background: rgba(209, 107, 26, 0.15);
-  color: var(--text-primary);
 }

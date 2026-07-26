@@ -1,108 +1,41 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google"; // Sirf Inter rakhein
+import { Inter } from "next/font/google";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar/Sidebar";
+import Navbar from "@/components/Navbar/Navbar";
+import CustomCursor from "@/components/CustomCursor";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
-// ── SEO AUTHORITY DATA (Sab kuch safe hai) ──
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Kashish Singh",
-  otherName: "kashish singh rai",
   alternateName: "kashishsinghrai",
   url: "https://kashishsinghrai.vercel.app",
-  image: "https://kashishsinghrai.vercel.app/hero-avatar.png",
   sameAs: [
     "https://github.com/kashishsinghrai",
     "https://linkedin.com/in/kashishsinghrai",
-    "https://twitter.com/kashishsinghrai",
-    "https://kashishsinghrai.blogspot.com",
-    "https://bsky.app/profile/kashishsinghrai.bsky.social",
     "https://navojit.com",
   ],
   jobTitle: "Software Engineer & Founder",
-  worksFor: {
-    "@type": "Organization",
-    name: "Navojit",
-  },
-  alumniOf: [
-    { "@type": "CollegeOrUniversity", name: "Rai University" },
-    {
-      "@type": "CollegeOrUniversity",
-      name: "Prof. Rajendra Singh (Rajju Bhaiya) University, Prayagraj",
-    },
-  ],
-  description:
-    "Kashish Singh is a Software Developer and the founder of Navojit, specializing in MERN stack, AI innovations, and scalable backend systems.",
+  worksFor: { "@type": "Organization", name: "Navojit" },
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kashishsinghrai.vercel.app"),
-  title: {
-    default: "Kashish Singh | Software Developer & Founder of Navojit",
-    template: "%s | Kashish Singh",
-  },
-  description:
-    "Official portfolio of Kashish Singh. Founder of Navojit, specializing in MERN stack, Next.js architecture, and AI-driven solutions. Student at Rai University.",
-
-  keywords: [
-    "Kashish Singh",
-    "Kashish",
-    "kashishsinghrai",
-    " kashish singh rai",
-    "kashish singh raipur",
-    "kashish singh uttar pradesh",
-    "Kashish Singh Navojit",
-    "Software Developer uttar pradesh",
-    "Backend Engineer India",
-    "GradLink project",
-  ],
-
-  verification: {
-    google: "jXH32nZsr6-iXwgG9OoNQSU5cwCF2pBditdiL7BKXSA",
-  },
-
-  alternates: {
-    canonical: "https://kashishsinghrai.vercel.app",
-  },
-
-  other: {
-    "google-adsense-account": "ca-pub-5483559036529536",
-  },
-
+  title: { default: "Kashish Singh | Software Architect", template: "%s | Kashish Singh" },
+  description: "Founder of Navojit. Software Architect specializing in MERN stack, Next.js, and AI-driven systems.",
+  alternates: { canonical: "https://kashishsinghrai.vercel.app" },
   openGraph: {
-    title: "Kashish Singh | Software Developer & Architect",
-    description:
-      "Kashish Singh's digital garden. Building Navojit and scalable AI systems.",
+    title: "Kashish Singh | Software Architect",
+    description: "Building Navojit and enterprise-grade digital ecosystems.",
     url: "https://kashishsinghrai.vercel.app",
-    siteName: "Kashish Singh",
     type: "website",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Kashish Singh Portfolio Banner",
-      },
-    ],
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    title: "Kashish Singh (@kashishsinghrai)",
-    creator: "@kashishsinghrai",
-    // ✅ ADDED THIS: Twitter/X preview ke liye
-    images: ["/og-image.jpg"],
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={inter.variable}>
       <head>
@@ -111,12 +44,21 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      {/* font-georgia ki zaroorat nahi kyunki globals.css mein body par pehle se apply hai */}
-      <body className="antialiased">
-        <div className="layoutWrapper">
-          <Sidebar />
-          <main className="mainContent">{children}</main>
+      <body className="bg-zinc-950 text-zinc-300 antialiased selection:bg-zinc-800 selection:text-white flex flex-col min-h-screen">
+        
+        <CustomCursor />
+
+        {/* Very soft, faint radial glow for depth */}
+        <div className="fixed inset-0 z-[-1] pointer-events-none flex justify-center overflow-hidden">
+          <div className="absolute top-[-10%] w-[80vw] h-[50vh] rounded-full bg-white opacity-[0.02] blur-[100px]"></div>
         </div>
+
+        <Navbar />
+        
+        <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          {children}
+        </main>
+
       </body>
     </html>
   );

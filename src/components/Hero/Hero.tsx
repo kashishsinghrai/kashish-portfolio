@@ -1,67 +1,86 @@
+"use client";
+
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
-import styles from "./Hero.module.css";
+import Link from "next/link";
+import { motion, Variants } from "framer-motion";
 
 export default function Hero() {
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.1,
+      }
+    }
+  };
+
+  const itemVariants: Variants = {
+    hidden: { y: 20, opacity: 0 },
+    show: { 
+      y: 0, 
+      opacity: 1,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  };
+
   return (
-    <section className={styles.hero}>
-      <div className={styles.heroContent}>
-        {/* Left Side: Text and Actions */}
-        <div className={styles.textSection}>
-          {/* ✅ Primary Keyword: Kashish Singh in H1 */}
-          <h1 className={styles.title}>
-            Hey, I&apos;m{" "}
-            <span className={styles.nameGradient}>Kashish Singh</span>!
-          </h1>
-
-          <p className={styles.subtitle}>
-            I am a <span className={styles.highlight}>Software Developer</span>{" "}
-            and startup founder at <strong>Navojit</strong>.
-            {/* ✅ Secondary Keyword: "Kashish" naturally included for indexing */}
-            People often call me{" "}
-            <span className={styles.highlight}>Kashish</span>. I build scalable
-            systems and conscious digital ecosystems using Next.js and AI logic.
-          </p>
-
-          <div className={styles.buttonGroup}>
-            <Link
-              href="/about"
-              className={styles.btn}
-              title="Learn more about Kashish Singh"
-            >
-              <span className={styles.btnIcon} aria-hidden="true">
-                💾
-              </span>
-              About Me
-            </Link>
-
-            <a
-              href="mailto:kashishsingh124356@gmail.com"
-              className={styles.btn}
-              title="Contact Kashish Singh via Email"
-            >
-              <span className={styles.btnIcon} aria-hidden="true">
-                📧
-              </span>
-              Email Newsletter
-            </a>
+    <section className="w-full flex flex-col items-center text-center py-20 md:py-32">
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+        className="flex flex-col items-center w-full max-w-4xl"
+      >
+        {/* Avatar Image */}
+        <motion.div variants={itemVariants} className="mb-6">
+          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full border-4 border-zinc-800 shadow-xl relative overflow-hidden mx-auto">
+            <Image 
+              src="/me.jpg" 
+              alt="Kashish Singh" 
+              fill 
+              sizes="(max-width: 768px) 112px, 144px"
+              className="object-cover"
+              priority
+            />
           </div>
-        </div>
+        </motion.div>
 
-        {/* Right Side: Visual Image */}
-        <div className={styles.imageWrapper}>
-          <Image
-            src="/hero-avatar.png"
-            /* ✅ Image SEO: Full name and role in alt text */
-            alt="Kashish Singh - Software Developer and Founder of Navojit"
-            width={300}
-            height={300}
-            priority
-            className={styles.heroImage}
-          />
-        </div>
-      </div>
+        {/* Headlines */}
+        <motion.h1 
+          variants={itemVariants}
+          className="text-4xl md:text-6xl font-bold text-white tracking-tight leading-tight"
+        >
+          Kashish Singh
+        </motion.h1>
+        
+        <motion.p 
+          variants={itemVariants}
+          className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mt-4 font-medium leading-relaxed"
+        >
+          Architecting Navojit. Engineering Digital Ecosystems.
+        </motion.p>
+
+        {/* Call to Actions */}
+        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center gap-4 mt-10 w-full sm:w-auto">
+          <Link 
+            href="/projects" 
+            className="w-full sm:w-auto bg-white text-black px-6 py-3 rounded-lg font-medium hover:bg-zinc-200 transition-colors shadow-sm"
+          >
+            Explore Projects
+          </Link>
+          
+          <Link 
+            href="https://github.com/kashishsinghrai" 
+            target="_blank"
+            className="w-full sm:w-auto border border-zinc-700 text-white px-6 py-3 rounded-lg hover:bg-zinc-800 transition-colors font-medium"
+          >
+            View GitHub
+          </Link>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

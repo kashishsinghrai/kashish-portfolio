@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import styles from "./BlogList.module.css";
 
 interface Post {
   date: string;
@@ -38,6 +37,10 @@ interface BlogListProps {
   subtitle?: string;
 }
 
+// -----------------------------------------------------------------------------
+// BLOG LIST COMPONENT
+// Translated to Tailwind CSS. Displays a list of blog posts or notes.
+// -----------------------------------------------------------------------------
 export default function BlogList({
   posts,
   compact = false,
@@ -45,44 +48,57 @@ export default function BlogList({
   title = "Blog",
   subtitle = "Guides, references, and tutorials.",
 }: BlogListProps) {
+  
   // Internal helper to render the list rows
   const renderList = (postItems: Post[]) => (
-    <ul className={styles.postList}>
+    <ul className="flex flex-col gap-4">
       {postItems.map((post, index) => (
-        <li key={index} className={styles.postItem}>
-          <span className={styles.postDate}>{post.date}</span>
-          <Link href={post.slug} className={styles.postLink}>
+        <li 
+          key={index} 
+          className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 py-3 border-b border-white/5 hover:border-white/20 transition-colors"
+        >
+          <span className="text-sm font-mono text-foreground/50 w-24 shrink-0">
+            {post.date}
+          </span>
+          <Link 
+            href={post.slug} 
+            className="flex-1 text-lg font-medium text-foreground/90 hover:text-accent-blue transition-colors"
+          >
             {post.title}
           </Link>
-          {post.tag && <span className={styles.tagBadge}>{post.tag}</span>}
+          {post.tag && (
+            <span className="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs text-foreground/70 uppercase tracking-widest shrink-0">
+              {post.tag}
+            </span>
+          )}
         </li>
       ))}
     </ul>
   );
 
   return (
-    <div className={styles.wrapper}>
+    <div className="w-full max-w-4xl">
       {/* ── Header Section ── */}
-      <div className={styles.header}>
-        <div className={styles.titleContainer}>
-          <span className={styles.icon}>{icon}</span>
+      <div className="mb-10">
+        <div className="flex items-center gap-3 mb-2">
+          <span className="text-3xl bg-white/5 p-2 rounded-lg">{icon}</span>
           {compact ? (
-            <h2 className={styles.title}>{title}</h2>
+            <h2 className="text-2xl font-bold">{title}</h2>
           ) : (
-            <h1 className={styles.title}>{title}</h1>
+            <h1 className="text-4xl font-bold tracking-tight">{title}</h1>
           )}
         </div>
-        <p className={styles.subtitle}>{subtitle}</p>
+        <p className="text-foreground/70">{subtitle}</p>
       </div>
 
       {/* ── Posts Section ── */}
       {compact
         ? renderList(posts)
         : groupByYear(posts).map(({ year, posts: yearPosts }) => (
-            <div key={year} className={styles.yearGroup}>
-              <h3 className={styles.yearHeading}>
+            <div key={year} className="mb-12">
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-4 text-white/90">
                 {year}
-                <span className={styles.count}>
+                <span className="text-sm font-normal text-foreground/50 px-2 py-1 bg-white/5 rounded-full border border-white/10">
                   {yearPosts.length} {yearPosts.length === 1 ? "post" : "posts"}
                 </span>
               </h3>

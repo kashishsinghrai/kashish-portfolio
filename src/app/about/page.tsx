@@ -1,8 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Metadata } from "next";
-import styles from "./page.module.css";
-import { USER_DATA } from "@/data/user";
+import { prisma } from "@/lib/db";
 
 // ✅ SEO: Page specific metadata
 export const metadata: Metadata = {
@@ -16,192 +15,123 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AboutPage() {
-  const { about } = USER_DATA;
+// Static Data for tech stack not modeled in DB
+const current = ["Scaling Navojit Auth Engine", "Pursuing B.Tech CSE at Rai University"];
+const software = [{ category: "Backend", name: "Next.js, Node.js, Fastify" }];
+const hardware = [{ name: "Workstation", detail: "Custom Built Windows Machine" }];
+
+// -----------------------------------------------------------------------------
+// ABOUT PAGE (Server Component)
+// -----------------------------------------------------------------------------
+export default async function AboutPage() {
+  const profile = await prisma.profile.findFirst();
 
   return (
-    <div className={styles.container}>
+    <div className="container mx-auto px-6 lg:px-12 py-24 max-w-5xl">
       {/* ── Bio Section with Side Image ── */}
-      <div className={styles.header}>
-        <h1>
-          <span>💾</span> About Kashish Singh
-        </h1>
-        <div className={styles.introSection}>
-          <div className={styles.introText}>
-            {about.bio.map((paragraph, index) => (
-              <p key={`bio-${index}`} className={styles.bioParagraph}>
-                {/* SEO Tip: Highlight keywords inside bio */}
-                {index === 0 ? (
-                  <>
-                    I am <strong>Kashish Singh</strong>, {paragraph.slice(17)}
-                  </>
-                ) : (
-                  paragraph
-                )}
-              </p>
-            ))}
+      <div className="flex flex-col md:flex-row gap-12 items-start mb-20">
+        <div className="flex-1">
+          <h1 className="text-4xl md:text-5xl font-bold mb-8 flex items-center gap-3">
+            <span className="text-3xl bg-white/5 p-2 rounded-lg">💾</span> About Kashish Singh
+          </h1>
+          <div className="space-y-6 text-lg text-foreground/80 leading-relaxed font-sans whitespace-pre-wrap">
+            {profile?.bio ? profile.bio : "I am Kashish Singh, a software developer, architect, and the founder of Navojit Technologies. I specialize in building high-performance digital ecosystems.\n\nBridging the gap between mathematical logic and enterprise-grade software."}
           </div>
-          <div className={styles.imageWrapper}>
+        </div>
+        <div className="w-full md:w-72 shrink-0">
+          <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-glass aspect-[3/4]">
             <Image
-              src="/me.jpg"
-              /* ✅ SEO: Descriptive ALT text */
+              src={profile?.avatarUrl || "/me.jpg"}
               alt="Kashish Singh - Software Developer and Founder of Navojit"
-              width={280}
-              height={380}
-              className={styles.profileImage}
+              fill
+              className="object-cover"
               priority
             />
           </div>
         </div>
       </div>
 
-      {/* ── Contact & Resume ── */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Contact & Professional Links</h2>
-        <ul className={styles.list}>
-          <li>
-            <strong>Email:</strong>{" "}
-            <a
-              href="mailto:kashishsingh124356@gmail.com"
-              className={styles.contactLink}
-              title="Send an email to Kashish Singh"
-            >
+      {/* ── Contact & Professional Links ── */}
+      <div className="mb-16 glass-panel p-8">
+        <h2 className="text-2xl font-bold mb-6 text-white border-b border-white/10 pb-3">Contact & Professional Links</h2>
+        <ul className="space-y-4 text-foreground/80">
+          <li className="flex items-center gap-3">
+            <strong className="text-white w-24">Email:</strong>{" "}
+            <a href="mailto:kashishsingh124356@gmail.com" className="hover:text-accent-blue transition-colors">
               kashishsingh124356@gmail.com
             </a>
           </li>
-          <li>
-            <strong>Resume:</strong>{" "}
-            <a
-              href={about.resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.contactLink}
-              title="Download Kashish Singh's CV"
-            >
-              View / Download my CV (PDF)
-            </a>
-          </li>
-          <li>
-            <strong>GitHub:</strong>{" "}
-            <a
-              href="https://github.com/kashishsinghrai"
-              className={styles.contactLink}
-              title="Kashish Singh on GitHub"
-            >
-              @kashishsinghrai
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      {/* ── What I'm Doing Now ── */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Current Focus</h2>
-        <p className={styles.updateDate}>
-          Last Updated:{" "}
-          {new Date().toLocaleDateString("en-US", {
-            month: "long",
-            year: "numeric",
-          })}
-        </p>
-        <ul className={styles.list}>
-          {about.current.map((item, index) => (
-            <li key={`current-${index}`}>{item}</li>
-          ))}
-        </ul>
-      </div>
-
-      {/* ── Tools & Gear ── */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Technical Stack & Gear</h2>
-        <h3 className={styles.subHeading}>Software Ecosystem</h3>
-        <ul className={styles.list}>
-          {about.software.map((item, index) => (
-            <li key={`software-${index}`}>
-              <strong>{item.category}:</strong> {item.name}
-            </li>
-          ))}
-        </ul>
-        <h3 className={styles.subHeading}>Hardware Setup</h3>
-        <ul className={styles.list}>
-          {about.hardware.map((item, index) => (
-            <li key={`hardware-${index}`}>
-              <strong>{item.name}:</strong> {item.detail}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* ── Navojit Publications ── */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Author & Publications</h2>
-        <ul className={styles.list}>
-          {about.publications.map((pub, index) => (
-            <li key={index}>
-              <a
-                href={pub.url}
-                className={styles.contactLink}
-                target="_blank"
-                rel="noopener"
-              >
-                {pub.title}
-              </a>{" "}
-              — {pub.platform}, {pub.year}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* ── Books ── */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Personal Growth & Reading</h2>
-        <ul className={styles.list}>
-          {about.books.map((book, index) => (
-            <li key={index}>
-              <em>{book.title}</em> by {book.author}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* ── Speaking & Interviews ── */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Public Speaking & Interviews</h2>
-        <h3 className={styles.subHeading}>Media Presence</h3>
-        <ul className={styles.list}>
-          {about.interviews.map((int, index) => (
-            <li key={index}>
-              {int.title} ({int.platform}, {int.year})
-            </li>
-          ))}
-        </ul>
-        <h3 className={styles.subHeading}>Events</h3>
-        <ul className={styles.list}>
-          {about.speaking.map((talk, index) => (
-            <li key={index}>
-              <strong>{talk.event}:</strong> {talk.topic} — {talk.location}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* ── Miscellaneous & Startup Links ── */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Digital Garden & Ventures</h2>
-        <ul className={styles.list}>
-          {about.miscellaneous.map((misc, index) => (
-            <li key={index}>
-              <a
-                href={misc.url}
-                className={styles.contactLink}
-                target="_blank"
-                rel="noopener"
-              >
-                {misc.label}
+          {profile?.resumeUrl && (
+            <li className="flex items-center gap-3">
+              <strong className="text-white w-24">Resume:</strong>{" "}
+              <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer" className="hover:text-accent-blue transition-colors">
+                View / Download my CV (PDF)
               </a>
             </li>
-          ))}
+          )}
+          {profile?.githubUrl && (
+            <li className="flex items-center gap-3">
+              <strong className="text-white w-24">GitHub:</strong>{" "}
+              <a href={profile.githubUrl} target="_blank" rel="noopener noreferrer" className="hover:text-accent-blue transition-colors">
+                @kashishsinghrai
+              </a>
+            </li>
+          )}
+          {profile?.linkedinUrl && (
+            <li className="flex items-center gap-3">
+              <strong className="text-white w-24">LinkedIn:</strong>{" "}
+              <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer" className="hover:text-accent-blue transition-colors">
+                Connect with me
+              </a>
+            </li>
+          )}
+          {profile?.twitterUrl && (
+            <li className="flex items-center gap-3">
+              <strong className="text-white w-24">Twitter / X:</strong>{" "}
+              <a href={profile.twitterUrl} target="_blank" rel="noopener noreferrer" className="hover:text-accent-blue transition-colors">
+                Follow me
+              </a>
+            </li>
+          )}
         </ul>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        {/* ── What I'm Doing Now ── */}
+        <div className="glass-panel p-8">
+          <h2 className="text-2xl font-bold mb-2 text-white">Current Focus</h2>
+          <p className="text-xs text-foreground/50 uppercase tracking-widest mb-6">
+            Last Updated: {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-foreground/80">
+            {current.map((item, index) => (
+              <li key={`current-${index}`}>{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        {/* ── Tools & Gear ── */}
+        <div className="glass-panel p-8">
+          <h2 className="text-2xl font-bold mb-6 text-white">Technical Stack & Gear</h2>
+          
+          <h3 className="text-sm font-bold text-accent-blue uppercase tracking-widest mb-3">Software Ecosystem</h3>
+          <ul className="space-y-2 text-foreground/80 mb-6">
+            {software.map((item, index) => (
+              <li key={`software-${index}`}>
+                <strong className="text-white">{item.category}:</strong> {item.name}
+              </li>
+            ))}
+          </ul>
+          
+          <h3 className="text-sm font-bold text-accent-orange uppercase tracking-widest mb-3">Hardware Setup</h3>
+          <ul className="space-y-2 text-foreground/80">
+            {hardware.map((item, index) => (
+              <li key={`hardware-${index}`}>
+                <strong className="text-white">{item.name}:</strong> {item.detail}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
