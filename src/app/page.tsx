@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { prisma } from "@/lib/db";
 import Hero from "@/components/Hero/Hero";
 import BlogList from "@/components/BlogList/BlogList";
