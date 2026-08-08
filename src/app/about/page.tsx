@@ -1,9 +1,10 @@
 export const dynamic = "force-dynamic";
 
 import React from "react";
-import Image from "next/image";
+
 import { Metadata } from "next";
 import { prisma } from "@/lib/db";
+import AvatarImage from "@/components/AvatarImage";
 
 // ✅ SEO: Page specific metadata
 export const metadata: Metadata = {
@@ -41,15 +42,7 @@ export default async function AboutPage() {
           </div>
         </div>
         <div className="w-full md:w-72 shrink-0">
-          <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-glass aspect-[3/4]">
-            <Image
-              src={profile?.avatarUrl || "/me.jpg"}
-              alt="Kashish Singh - Software Developer and Founder of Navojit"
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
+          <AvatarImage src={profile?.avatarUrl} />
         </div>
       </div>
 
@@ -115,7 +108,7 @@ export default async function AboutPage() {
         {/* ── Tools & Gear ── */}
         <div className="glass-panel p-8">
           <h2 className="text-2xl font-bold mb-6 text-white">Technical Stack & Gear</h2>
-          
+
           <h3 className="text-sm font-bold text-accent-blue uppercase tracking-widest mb-3">Software Ecosystem</h3>
           <ul className="space-y-2 text-foreground/80 mb-6">
             {software.map((item, index) => (
@@ -124,7 +117,7 @@ export default async function AboutPage() {
               </li>
             ))}
           </ul>
-          
+
           <h3 className="text-sm font-bold text-accent-orange uppercase tracking-widest mb-3">Hardware Setup</h3>
           <ul className="space-y-2 text-foreground/80">
             {hardware.map((item, index) => (
