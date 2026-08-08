@@ -22,6 +22,11 @@ export async function upsertProfile(data: {
   githubUrl?: string;
   linkedinUrl?: string;
   twitterUrl?: string;
+  currentFocus?: string;
+  education?: string;
+  techStack?: string;
+  hardwareSetup?: string;
+  lastUpdated?: string;
 }) {
   await requireAuth();
   
