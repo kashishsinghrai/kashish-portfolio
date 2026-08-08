@@ -77,14 +77,18 @@ model OpenSourcePackage {
 // Profile Model: Global profile info for the About section.
 // -----------------------------------------------------------------------------
 model Profile {
-  id          String   @id @default(uuid())
-  bio         String   @db.Text
-  avatarUrl   String?
-  resumeUrl   String?
-  githubUrl   String?
-  linkedinUrl String?
-  twitterUrl  String?
-  updatedAt   DateTime @updatedAt
+  id            String   @id @default(uuid())
+  bio           String   @db.Text
+  avatarUrl     String?
+  resumeUrl     String?
+  githubUrl     String?
+  linkedinUrl   String?
+  twitterUrl    String?
+  currentFocus  String?
+  education     String?
+  techStack     String?
+  hardwareSetup String?
+  updatedAt     DateTime @updatedAt
 }
 
 // -----------------------------------------------------------------------------
